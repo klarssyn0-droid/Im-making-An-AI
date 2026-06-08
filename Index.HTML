@@ -94,5 +94,347 @@
   </div>
 
   <script src="auth.js"></script>
+</body><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus AI Mainframe</title>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap');
+
+    :root {
+      --bg-main: #060609;
+      --bg-surface: #0c0d14;
+      --bg-surface-elevated: #141622;
+      --border-subtle: rgba(255, 255, 255, 0.04);
+      --border-glow: rgba(138, 92, 246, 0.2);
+      --text-primary: #f4f4f6;
+      --text-secondary: #8f92a1;
+      --accent-primary: #8a5cf6;
+      --accent-primary-glow: #aa85ff;
+      --accent-cyan: #06b6d4;
+      --accent-success: #10b981;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-main);
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text-primary);
+      overflow: hidden;
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    /* Layout Container */
+    .nexus-app-container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Sidebar Interface */
+    .nexus-sidebar {
+      width: 280px;
+      background-color: var(--bg-surface);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .brand-logo-glow {
+      width: 12px;
+      height: 12px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--accent-cyan);
+    }
+
+    .brand-text {
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-size: 0.9rem;
+      background: linear-gradient(90deg, var(--text-primary), var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-grow: 1;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item.active {
+      background: rgba(138, 92, 246, 0.08);
+      color: var(--accent-primary-glow);
+      border: 1px solid var(--border-glow);
+    }
+
+    .user-profile-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      padding: 12px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar-fallback {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #3b82f6, #8a5cf6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    /* Main Console Area */
+    .nexus-main-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-main);
+    }
+
+    .top-system-bar {
+      height: 64px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+    }
+
+    .system-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+    }
+
+    .status-pulse {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-success);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-success);
+    }
+
+    /* Chat Log & Message Textures */
+    .display-stream {
+      flex-grow: 1;
+      padding: 32px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .msg-bubble {
+      max-width: 80%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .msg-bubble.user {
+      background: var(--bg-surface-elevated);
+      align-self: flex-end;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .msg-bubble.ai {
+      background: rgba(138, 92, 246, 0.03);
+      align-self: flex-start;
+      border: 1px solid rgba(138, 92, 246, 0.1);
+    }
+
+    .system-terminal-log {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+    }
+
+    /* Input Dock */
+    .input-dock {
+      padding: 24px 32px 32px;
+    }
+
+    .input-wrapper {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 8px 8px 8px 18px;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrapper:focus-within {
+      border-color: rgba(138, 92, 246, 0.4);
+    }
+
+    #nexus-query-input {
+      flex-grow: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+
+    .send-action-btn {
+      background: var(--accent-primary);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .send-icon {
+      width: 16px;
+      height: 16px;
+      fill: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nexus-app-container">
+    <aside class="nexus-sidebar">
+      <div class="brand-header">
+        <div class="brand-logo-glow"></div>
+        <span class="brand-text">NEXUS // AI</span>
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="#" class="nav-item active">❖ Terminal Uplink</a>
+        <a href="#" class="nav-item">⚙ Core Settings</a>
+      </nav>
+      
+      <div class="user-profile-card">
+        <div class="avatar-fallback">K</div>
+        <div class="user-details">
+          <span style="font-size: 0.7rem; color: var(--text-secondary);">OPERATOR</span>
+          <span class="user-name" id="user-display-name">Klarssyn</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="nexus-main-content">
+      <header class="top-system-bar">
+        <div class="system-status">
+          <div class="status-pulse"></div>
+          <span>SYSTEM STATUS: <span style="color: var(--accent-success); font-weight:700;">ONLINE</span></span>
+        </div>
+      </header>
+      
+      <div class="display-stream" id="chat-log">
+        <div class="system-terminal-log">[SYSTEM INITIALIZED]: Nexus Brain V2 Online. Waiting for input...</div>
+      </div>
+      
+      <footer class="input-dock">
+        <div class="input-wrapper">
+          <input type="text" id="nexus-query-input" placeholder="Communicate with Nexus Mainframe...">
+          <button class="send-action-btn" id="send-btn">
+            <svg viewBox="0 0 24 24" class="send-icon"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          </button>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const queryInput = document.getElementById('nexus-query-input');
+      const sendButton = document.getElementById('send-btn');
+      const chatLog = document.getElementById('chat-log');
+
+      // Processing Brain Matrix
+      function generateAiResponse(userInput) {
+        const input = userInput.toLowerCase().trim();
+        
+        if (input.includes('hello') || input.includes('hi')) {
+          return "Greetings, Operator. Neural connection established. How can I assist your development workflow today?";
+        }
+        if (input.includes('status') || input.includes('system')) {
+          return "All core matrix systems operating within optimal thresholds. Latency: 14ms. Memory Allocation: Stable.";
+        }
+        if (input.includes('help') || input.includes('code')) {
+          return "Mainframe ready. I can process systemic configuration modules or layout templates. Specify your parameter target.";
+        }
+        
+        // Default processing fallback
+        return `Query parsed: "${userInput}". Analyzing dataset linkages... Access granted. Systems standing by for structural deployment orders.`;
+      }
+
+      function handleUserSubmission() {
+        const text = queryInput.value.trim();
+        if (text === '') return;
+
+        // 1. Render User Bubble
+        const userBubble = document.createElement('div');
+        userBubble.className = 'msg-bubble user';
+        userBubble.textContent = text;
+        chatLog.appendChild(userBubble);
+
+        queryInput.value = '';
+        chatLog.scrollTop = chatLog.scrollHeight;
+
+        // 2. Trigger AI Brain Processing Delay
+        setTimeout(() => {
+          const aiResponseText = generateAiResponse(text);
+          const aiBubble = document.createElement('div');
+          aiBubble.className = 'msg-bubble ai';
+          aiBubble.textContent = aiResponseText;
+          chatLog.appendChild(aiBubble);
+          chatLog.scrollTop = chatLog.scrollHeight;
+        }, 600);
+      }
+
+      // Bind Clicks and Keyboard Events
+      sendButton.addEventListener('click', handleUserSubmission);
+      queryInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleUserSubmission();
+      });
+    });
+  </script>
 </body>
+</html>
+
 </html>
