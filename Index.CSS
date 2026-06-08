@@ -1,0 +1,17 @@
+:root {
+  --bg-main: #060609;
+  --bg-surface: #0c0d14;
+  --bg-surface-elevated: #141622;
+  
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --border-glow: rgba(138, 92, 246, 0.2);
+  
+  --text-primary: #f4f4f6;
+  --text-secondary: #8f92a1;
+  
+  /* Brand Accents */
+  --accent-primary: #8a5cf6;       /* Hyper-violet */
+  --accent-primary-glow: #aa85ff;
+  --accent-cyan: #06b6d4;          /* Cyber cyan */
+  --accent-success: #10b981;       /* System online green */
+}
