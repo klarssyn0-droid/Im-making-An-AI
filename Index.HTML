@@ -1,0 +1,56 @@
+<div class="nexus-app-container">
+  
+  <aside class="nexus-sidebar">
+    <div class="brand-header">
+      <div class="brand-logo-glow"></div>
+      <span class="brand-text">NEXUS // AI</span>
+    </div>
+    
+    <nav class="nav-menu">
+      <a href="#" class="nav-item active">
+        <span class="nav-icon">❖</span> Terminal Uplink
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">⚙</span> Core Settings
+      </a>
+      <a href="#" class="nav-item">
+        <span class="nav-icon">📁</span> Knowledge Bank
+      </a>
+    </nav>
+    
+    <div class="user-profile-card">
+      <div class="avatar-container">
+        <div class="avatar-fallback" id="user-avatar-initial">?</div>
+        <div class="status-indicator online"></div>
+      </div>
+      <div class="user-details">
+        <span class="user-label">Operator</span>
+        <span class="user-name" id="user-display-name">Guest User</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="nexus-main-content">
+    <header class="top-system-bar">
+      <div class="system-status">
+        <span class="status-pulse"></span>
+        <span class="status-text">SYSTEM STATUS: <span class="text-online">ONLINE</span></span>
+      </div>
+    </header>
+    
+    <div class="display-stream" id="chat-log">
+      <div class="system-message">
+        <p class="sys-timestamp">[00:00:01] Nexus Mainframe connected. Secure connection active.</p>
+      </div>
+    </div>
+    
+    <footer class="input-dock">
+      <div class="input-wrapper">
+        <input type="text" id="nexus-query-input" placeholder="Ask Nexus anything..." autocomplete="off">
+        <button class="send-action-btn" aria-label="Send query">
+          <svg viewBox="0 0 24 24" class="send-icon"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+    </footer>
+  </main>
+</div>
